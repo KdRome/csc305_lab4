@@ -5,6 +5,5 @@
 void firstComeFirstServe(vector<Process>& processes);
 void priority(vector<Process>& processes);
 void shortestJobNext(vector<Process>& processes);
-void roundRobin(vector<Process>& processes);
-
+void roundRobin(vector<Process>& processes, int quantum);
 #endif

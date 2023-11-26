@@ -89,3 +89,5 @@ void shortestJobNext(vector<Process>& processes) {
         }
     }
 }
+
+

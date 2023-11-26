@@ -4,18 +4,65 @@
 
 using namespace std;
 
-//function prototype
 vector<Process> inputProcesses();
 void displayResults(const vector<Process>& processes);
+void userSelection(vector<Process> processes);
 
 int main() {
     vector<Process> processes = inputProcesses();
+
+    //userSelection(processes);
+
     
-    shortestJobNext(processes);
-    //priority(processes);
-    //firstComeFirstServe(processes);
-    displayResults(processes);
+
+    
+
+
     return 0;
+}
+
+void userSelection(vector<Process> processes) {
+    
+    int userInput = 0;
+    int quantum = 0;
+
+    do {
+        cout << "\nSelect which algorithm you would like to run\n" << endl;
+        
+        cout << "1. First Come - First Serve: Non-preemptive" << endl;
+        cout << "2. Priority: Pre-emptive" << endl;
+        cout << "3. Shortest Job Next: Non-preemptive" << endl;
+        cout << "4. Round Robin: Non-preemptive\n" << endl;
+        cin >> userInput;
+
+        switch (userInput) {
+            case 1:
+                firstComeFirstServe(processes);
+                displayResults(processes);
+                userSelection(processes);
+                break;
+            case 2:
+                priority(processes);
+                displayResults(processes);
+                userSelection(processes);
+                break;
+            case 3:
+                shortestJobNext(processes);
+                displayResults(processes);
+                userSelection(processes);
+                break;
+            case 4:
+                cout << "Enter the Time Quantum: " << endl;
+                cin >> quantum;
+                roundRobin(processes, quantum);
+                displayResults(processes);
+                userSelection(processes);
+                break;
+            default:
+                cout << "Select one of the options" << endl;
+                break;
+        }
+    }while (userInput > 4 || userInput < 1);
 }
 
 void displayResults(const vector<Process>& processes) {
