@@ -4,14 +4,15 @@
 
 using namespace std;
 
-
+//function prototype
 vector<Process> inputProcesses();
 void displayResults(const vector<Process>& processes);
 
 int main() {
     vector<Process> processes = inputProcesses();
     
-    priority(processes);
+    shortestJobNext(processes);
+    //priority(processes);
     //firstComeFirstServe(processes);
     displayResults(processes);
     return 0;

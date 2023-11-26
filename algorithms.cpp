@@ -60,3 +60,32 @@ void priority(vector<Process>& processes) {
         }
     }
 }
+
+void shortestJobNext(vector<Process>& processes) {
+    int currentTime = 0;
+    int completed = 0;
+    int n = processes.size();
+
+    while (completed != n) {
+        int idx = -1;
+        int shortestBurst = INT_MAX;
+
+        for (int i = 0; i < n; i++) {
+            if (processes[i].arrivalTime <= currentTime && processes[i].burstTime < shortestBurst && processes[i].completionTime == 0) {
+                shortestBurst = processes[i].burstTime;
+                idx = i;
+            }
+        }
+
+        if (idx != -1) {
+            processes[idx].startTime = currentTime;
+            processes[idx].completionTime = currentTime + processes[idx].burstTime;
+            processes[idx].turnaroundTime = processes[idx].completionTime - processes[idx].arrivalTime;
+            currentTime = processes[idx].completionTime;
+            completed++;
+        }
+        else {
+            currentTime++;
+        }
+    }
+}
