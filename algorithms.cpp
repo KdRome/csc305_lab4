@@ -18,3 +18,45 @@ void firstComeFirstServe(vector<Process>& processes) {
         currentTime = process.completionTime;
     }
 }
+
+void priority(vector<Process>& processes) {
+    int currentTime = 0;
+    int completed = 0;
+    int n = processes.size();
+
+    while (completed != n) {
+        int idx = -1;
+        int minPriority = INT_MAX;
+
+        for (int i = 0; i < n; i++) {
+            if (processes[i].arrivalTime <= currentTime && processes[i].remainingBurstTime > 0) {
+                if (processes[i].priority < minPriority) {
+                    minPriority = processes[i].priority;
+                    idx = i;
+                }
+                if (processes[i].priority == minPriority) {
+                    if (idx == -1 || processes[i].arrivalTime < processes[idx].arrivalTime) {
+                        idx = i;
+                    }
+                }
+            }
+        }
+
+        if (idx != -1) {
+            if (processes[idx].startTime == -1) {
+                processes[idx].startTime = currentTime;
+            }
+            processes[idx].remainingBurstTime -= 1;
+            currentTime++;
+
+            if (processes[idx].remainingBurstTime == 0) {
+                processes[idx].completionTime = currentTime;
+                processes[idx].turnaroundTime = processes[idx].completionTime - processes[idx].arrivalTime;
+                completed++;
+            }
+        }
+        else {
+            currentTime++;
+        }
+    }
+}

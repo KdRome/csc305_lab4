@@ -10,7 +10,9 @@ void displayResults(const vector<Process>& processes);
 
 int main() {
     vector<Process> processes = inputProcesses();
-    firstComeFirstServe(processes);
+    
+    priority(processes);
+    //firstComeFirstServe(processes);
     displayResults(processes);
     return 0;
 }
@@ -36,8 +38,8 @@ vector<Process> inputProcesses() {
         string name;
         int priority, burstTime, arrivalTime;
 
-        cout << "Enter process name, priority, burst time, and arrival time: ";
-        cin >> name >> priority >> burstTime >> arrivalTime;
+        cout << "Enter process name, arrival time, priority, and burst time (seperated by a space): ";
+        cin >> name >> arrivalTime >> priority >> burstTime;
 
         processes.emplace_back(name, priority, burstTime, arrivalTime);
     }

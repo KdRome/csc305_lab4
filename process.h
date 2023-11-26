@@ -16,9 +16,10 @@ public:
     int startTime;
     int completionTime;
     int turnaroundTime;
+    int remainingBurstTime;
 
     Process(string n, int p, int bt, int at)
         : name(n), priority(p), burstTime(bt), arrivalTime(at),
-        startTime(0), completionTime(0), turnaroundTime(0) {}
+        startTime(-1), completionTime(0), turnaroundTime(0), remainingBurstTime(bt) {}
 };
 #endif
