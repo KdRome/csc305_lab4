@@ -1,10 +1,10 @@
 # Lab #4 - Process Management
 
 ## Algorithms
-### First Come First Serve: non-preemptive
-### Priority: pre-emptive
-### Shortest Job Next: non-preemptive
-### Round Robin: non-preemptive
+- [x] First Come First Serve: non-preemptive
+- [x] Priority: pre-emptive
+- [x] Shortest Job Next: non-preemptive
+- [x] Round Robin: non-preemptive
 
 ## Sample
 
