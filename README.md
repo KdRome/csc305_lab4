@@ -16,16 +16,16 @@
 
 #### First Come First Serve
 
-![lab 4 option 1](https://github.com/KdRome/csc305_lab4/assets/119768219/bc731707-28f9-4ceb-b8ec-902ba2ee448b)
+![lab 4 option 1](https://github.com/KdRome/csc305_lab4/assets/119768219/829b1d80-cfe0-47d7-b7a5-f54c63d7eab0)
 
 #### Priority
 
-![lab 4 option 2](https://github.com/KdRome/csc305_lab4/assets/119768219/18bf9770-ccbc-436b-ac4b-7d7707d8e7a2)
+![lab 4 option 2](https://github.com/KdRome/csc305_lab4/assets/119768219/c93307f8-d566-48fe-86b1-0ecc3c0ffe1d)
 
 #### Shortest Job Next
 
-![lab 4 option 3](https://github.com/KdRome/csc305_lab4/assets/119768219/4617252b-225b-42d0-ad9e-3c1ee2113527)
+![lab 4 option 3](https://github.com/KdRome/csc305_lab4/assets/119768219/af626d18-3b9b-45b5-a102-ff6097330b2c)
 
 #### Round Robin
 
-![lab 4 option 4](https://github.com/KdRome/csc305_lab4/assets/119768219/a29f555c-64fe-4dcc-87b9-c9c089757ebd)
+![lab 4 option 4](https://github.com/KdRome/csc305_lab4/assets/119768219/0de36807-8af4-46ff-9653-de7864da20f6)
