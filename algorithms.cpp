@@ -90,4 +90,58 @@ void shortestJobNext(vector<Process>& processes) {
     }
 }
 
+void roundRobin(vector<Process>& processes, int quantum) {
+    
+    int currentTime = processes.empty() ? 0 : processes[0].arrivalTime;
+    queue<int> processQueue;
 
+    // Print initial process states for debugging
+    //cout << "Initial Process States:" << endl;
+    //for (const auto& process : processes) {
+     //   cout << "Process " << process.name << ", Arrival Time: " << process.arrivalTime
+     //       << ", Burst Time: " << process.burstTime << endl;
+   // }
+
+    // Enqueue processes based on adjusted arrival time
+    for (int i = 0; i < processes.size(); ++i) {
+        if (processes[i].arrivalTime <= currentTime) {
+            processQueue.push(i);
+            //cout << "Process " << processes[i].name << " enqueued initially at time " << currentTime << endl;
+        }
+    }
+
+    while (!processQueue.empty()) {
+        int idx = processQueue.front();
+        processQueue.pop();
+
+        if (processes[idx].remainingBurstTime <= 0) continue; // Skip already completed processes
+
+        if (processes[idx].startTime == -1) {
+            processes[idx].startTime = currentTime;
+        }
+
+        //cout << "Process " << processes[idx].name << " is running." << endl;
+
+        int executionTime = min(quantum, processes[idx].remainingBurstTime);
+        processes[idx].remainingBurstTime -= executionTime;
+        currentTime += executionTime;
+
+        // Enqueue other processes that have now arrived and are not completed
+        for (int i = 0; i < processes.size(); ++i) {
+            if (processes[i].arrivalTime <= currentTime && processes[i].remainingBurstTime > 0 && i != idx) {
+                processQueue.push(i);
+                //cout << "Process " << processes[i].name << " enqueued during execution." << endl;
+            }
+        }
+
+        if (processes[idx].remainingBurstTime > 0) {
+            processQueue.push(idx); // Re-enqueue if not finished
+            //cout << "Process " << processes[idx].name << " re-enqueued with remaining burst time: " << processes[idx].remainingBurstTime << endl;
+        }
+        else {
+            processes[idx].completionTime = currentTime; // Set completion time
+            processes[idx].turnaroundTime = processes[idx].completionTime - processes[idx].arrivalTime;
+            //cout << "Process " << processes[idx].name << " completed." << endl;
+        }
+    }
+}

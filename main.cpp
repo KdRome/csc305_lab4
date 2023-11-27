@@ -6,22 +6,16 @@ using namespace std;
 
 vector<Process> inputProcesses();
 void displayResults(const vector<Process>& processes);
-void userSelection(vector<Process> processes);
+void userSelection(vector<Process>& processes);
+void resetProcessStates(vector<Process>& processes);
 
 int main() {
     vector<Process> processes = inputProcesses();
-
-    //userSelection(processes);
-
-    
-
-    
-
-
+    userSelection(processes);
     return 0;
 }
 
-void userSelection(vector<Process> processes) {
+void userSelection(vector<Process>& processes) {
     
     int userInput = 0;
     int quantum = 0;
@@ -35,35 +29,44 @@ void userSelection(vector<Process> processes) {
         cout << "4. Round Robin: Non-preemptive\n" << endl;
         cin >> userInput;
 
+        resetProcessStates(processes);
+
         switch (userInput) {
             case 1:
                 firstComeFirstServe(processes);
                 displayResults(processes);
-                userSelection(processes);
                 break;
             case 2:
                 priority(processes);
                 displayResults(processes);
-                userSelection(processes);
                 break;
             case 3:
                 shortestJobNext(processes);
                 displayResults(processes);
-                userSelection(processes);
                 break;
             case 4:
                 cout << "Enter the Time Quantum: " << endl;
                 cin >> quantum;
                 roundRobin(processes, quantum);
                 displayResults(processes);
-                userSelection(processes);
                 break;
             default:
                 cout << "Select one of the options" << endl;
                 break;
         }
+        userSelection(processes);
     }while (userInput > 4 || userInput < 1);
 }
+
+void resetProcessStates(vector<Process>& processes) {
+    for (auto& process : processes) {
+        process.startTime = -1;
+        process.completionTime = 0;
+        process.turnaroundTime = 0;
+        process.remainingBurstTime = process.burstTime;
+    }
+}
+
 
 void displayResults(const vector<Process>& processes) {
     double totalTurnaroundTime = 0;
