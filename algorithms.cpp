@@ -1,3 +1,4 @@
+#include <climits>
 #include "algorithms.h"
 #include "process.h"
 
