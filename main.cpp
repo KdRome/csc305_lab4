@@ -67,16 +67,15 @@ void resetProcessStates(vector<Process>& processes) {
     }
 }
 
-
 void displayResults(const vector<Process>& processes) {
     double totalTurnaroundTime = 0;
-    cout << "Name\tStart Time\tCompletion Time\tTurnaround Time\n";
+    cout << "Name\tStart Time\tCompletion Time\tTurn Around Time\n";
     for (const auto& process : processes) {
         cout << process.name << "\t" << process.startTime << "\t\t"
             << process.completionTime << "\t\t" << process.turnaroundTime << "\n";
         totalTurnaroundTime += process.turnaroundTime;
     }
-    cout << "Average Turnaround Time: " << (totalTurnaroundTime / processes.size()) << "\n";
+    cout << "Average Turn Around Time: " << (totalTurnaroundTime / processes.size()) << "\n";
 }
 
 vector<Process> inputProcesses() {

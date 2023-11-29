@@ -12,6 +12,7 @@ public:
     string name;
     int priority;
     int burstTime;
+    int waitingTime;
     int arrivalTime;
     int startTime;
     int completionTime;

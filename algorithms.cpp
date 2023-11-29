@@ -117,52 +117,49 @@ void shortestJobNext(vector<Process>& processes) {
     cout << "end" << endl;
 }
 
-
 void roundRobin(vector<Process>& processes, int quantum) {
-    int currentTime = processes.empty() ? 0 : processes[0].arrivalTime;
+    // Sort processes by arrival time
+    sort(processes.begin(), processes.end(), [](const Process& a, const Process& b) {
+        return a.arrivalTime < b.arrivalTime;
+    });
+
+    int currentTime = 0;
     queue<int> processQueue;
-    vector<string> executionOrder; // Vector to store the order of execution
+    vector<string> executionOrder;
+    size_t processIndex = 0; // Tracks the next process to be enqueued
 
-    // Enqueue processes based on arrival time
-    for (int i = 0; i < processes.size(); ++i) {
-        if (processes[i].arrivalTime <= currentTime) {
-            processQueue.push(i);
+    while (processIndex < processes.size() || !processQueue.empty()) {
+        // Enqueue processes that have arrived
+        while (processIndex < processes.size() && processes[processIndex].arrivalTime <= currentTime) {
+            processQueue.push(processIndex++);
         }
-    }
 
-    while (!processQueue.empty()) {
+        if (processQueue.empty()) {
+            currentTime = processes[processIndex].arrivalTime;
+            continue;
+        }
+
         int idx = processQueue.front();
         processQueue.pop();
+        Process& proc = processes[idx];
 
-        // Skip already completed processes
-        if (processes[idx].remainingBurstTime <= 0) continue;
-
-        if (processes[idx].startTime == -1) {
-            processes[idx].startTime = currentTime;
+        if (proc.startTime == -1) {
+            proc.startTime = currentTime;
         }
 
-        // Record the execution order as the process gets the CPU
-        executionOrder.push_back(processes[idx].name);
-
-        int executionTime = min(quantum, processes[idx].remainingBurstTime);
-        processes[idx].remainingBurstTime -= executionTime;
+        executionOrder.push_back(proc.name);
+        int executionTime = min(quantum, proc.remainingBurstTime);
+        proc.remainingBurstTime -= executionTime;
         currentTime += executionTime;
 
-        // Enqueue other processes that have now arrived and are not completed
-        for (int i = 0; i < processes.size(); ++i) {
-            if (processes[i].arrivalTime <= currentTime && processes[i].remainingBurstTime > 0 && i != idx) {
-                processQueue.push(i);
-            }
-        }
-
         // Re-enqueue if not finished
-        if (processes[idx].remainingBurstTime > 0) {
+        if (proc.remainingBurstTime > 0) {
             processQueue.push(idx);
         }
         else {
-            // Set completion time
-            processes[idx].completionTime = currentTime;
-            processes[idx].turnaroundTime = processes[idx].completionTime - processes[idx].arrivalTime;
+            proc.completionTime = currentTime;
+            proc.turnaroundTime = proc.completionTime - proc.arrivalTime;
+            proc.waitingTime = proc.turnaroundTime - proc.burstTime;
         }
     }
 
@@ -171,5 +168,5 @@ void roundRobin(vector<Process>& processes, int quantum) {
     for (const auto& processName : executionOrder) {
         cout << processName << " -> ";
     }
-    cout << "end" << endl;
+    cout << "end\n";
 }
