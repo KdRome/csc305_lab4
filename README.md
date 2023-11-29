@@ -28,4 +28,4 @@
 
 #### Round Robin
 
-![lab 4 option 4](https://github.com/KdRome/csc305_lab4/assets/119768219/0de36807-8af4-46ff-9653-de7864da20f6)
+![Capture](https://github.com/KdRome/csc305_lab4/assets/119768219/8c93653a-318e-4219-8b88-d0fe2978a223)
