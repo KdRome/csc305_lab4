@@ -37,34 +37,34 @@ void priority(vector<Process>& processes) {
     vector<string> executionOrder; // Vector to store the order of execution
 
     while (completed != n) {
-        int idx = -1;
+        int index = -1;
         int minPriority = INT_MAX;
 
         for (int i = 0; i < n; i++) {
             if (processes[i].arrivalTime <= currentTime && processes[i].remainingBurstTime > 0) {
                 if (processes[i].priority < minPriority) {
                     minPriority = processes[i].priority;
-                    idx = i;
+                    index = i;
                 }
                 if (processes[i].priority == minPriority) {
-                    if (idx == -1 || processes[i].arrivalTime < processes[idx].arrivalTime) {
-                        idx = i;
+                    if (index == -1 || processes[i].arrivalTime < processes[index].arrivalTime) {
+                        index = i;
                     }
                 }
             }
         }
-        if (idx != -1) {
-            if (processes[idx].startTime == -1) {
-                processes[idx].startTime = currentTime;
+        if (index != -1) {
+            if (processes[index].startTime == -1) {
+                processes[index].startTime = currentTime;
             }
-            processes[idx].remainingBurstTime -= 1;
+            processes[index].remainingBurstTime -= 1;
             currentTime++;
 
-            if (processes[idx].remainingBurstTime == 0) {
-                processes[idx].completionTime = currentTime;
-                processes[idx].turnaroundTime = processes[idx].completionTime - processes[idx].arrivalTime;
+            if (processes[index].remainingBurstTime == 0) {
+                processes[index].completionTime = currentTime;
+                processes[index].turnaroundTime = processes[index].completionTime - processes[index].arrivalTime;
                 completed++;
-                executionOrder.push_back(processes[idx].name); // Add to execution order upon completion
+                executionOrder.push_back(processes[index].name); // Add to execution order upon completion
             }
         }
         else {
@@ -88,22 +88,22 @@ void shortestJobNext(vector<Process>& processes) {
     vector<string> executionOrder; // Vector to store the order of execution
 
     while (completed != n) {
-        int idx = -1;
+        int index = -1;
         int shortestBurst = INT_MAX;
 
         for (int i = 0; i < n; i++) {
             if (processes[i].arrivalTime <= currentTime && processes[i].burstTime < shortestBurst && processes[i].completionTime == 0) {
                 shortestBurst = processes[i].burstTime;
-                idx = i;
+                index = i;
             }
         }
-        if (idx != -1) {
-            processes[idx].startTime = currentTime;
-            processes[idx].completionTime = currentTime + processes[idx].burstTime;
-            processes[idx].turnaroundTime = processes[idx].completionTime - processes[idx].arrivalTime;
-            currentTime = processes[idx].completionTime;
+        if (index != -1) {
+            processes[index].startTime = currentTime;
+            processes[index].completionTime = currentTime + processes[index].burstTime;
+            processes[index].turnaroundTime = processes[index].completionTime - processes[index].arrivalTime;
+            currentTime = processes[index].completionTime;
             completed++;
-            executionOrder.push_back(processes[idx].name); // Add to execution order upon completion
+            executionOrder.push_back(processes[index].name); // Add to execution order upon completion
         }
         else {
             currentTime++;
@@ -139,9 +139,9 @@ void roundRobin(vector<Process>& processes, int quantum) {
             continue;
         }
 
-        int idx = processQueue.front();
+        int index = processQueue.front();
         processQueue.pop();
-        Process& proc = processes[idx];
+        Process& proc = processes[index];
 
         if (proc.startTime == -1) {
             proc.startTime = currentTime;
@@ -154,7 +154,7 @@ void roundRobin(vector<Process>& processes, int quantum) {
 
         // Re-enqueue if not finished
         if (proc.remainingBurstTime > 0) {
-            processQueue.push(idx);
+            processQueue.push(index);
         }
         else {
             proc.completionTime = currentTime;
